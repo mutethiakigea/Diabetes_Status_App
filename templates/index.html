@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Status Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa; /* Light gray background */
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            text-align: center;
+            color: #d9534f; /* Red color */
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #001f3f; /* Navy blue background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out; /* Smooth scaling on hover */
+        }
+
+        form:hover {
+            transform: scale(1.05); /* Scale up on hover */
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #337ab7; /* Navy blue border */
+            border-radius: 8px;
+            transition: border-color 0.3s ease-in-out; /* Smooth border color transition */
+            color: #333;
+        }
+
+        input:focus {
+            border-color: #d9534f; /* Red border on focus */
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #d9534f; /* Red background */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out; /* Smooth background color transition */
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #ac2925; /* Darker red on hover */
+        }
+
+        h4 {
+            text-align: center;
+            margin-top: 20px;
+            color: #d9534f;
+        }
+    </style>
+    <script>
+        // JavaScript function to fill fresh values
+        function fillFreshValues() {
+            // Set your desired fresh values here
+            document.getElementById("diabetesForm").reset();
+            document.getElementsByName("Glucose")[0].value = "";
+            document.getElementsByName("BloodPressure")[0].value = "";
+            document.getElementsByName("Insulin")[0].value = "";
+            document.getElementsByName("BMI")[0].value = "";
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Diabetes Status Predictor</h1>
+    <form id="diabetesForm" action="{{ url_for('predict')}}" method="post">
+        <input type="text" name="Glucose" placeholder="Enter Glucose level" value="{{ request.form['Glucose'] }}" required="required" /><br>
+        <input type="text" name="BloodPressure" placeholder="Enter Blood Pressure" value="{{ request.form['BloodPressure'] }}" required="required" /><br>
+        <input type="text" name="Insulin" placeholder="Enter Insulin level" value="{{ request.form['Insulin'] }}" required="required" /><br>
+        <input type="text" name="BMI" placeholder="Enter BMI" value="{{ request.form['BMI'] }}" required="required" /><br>
+        <button type="submit">Predict Diabetes Outcome</button>
+        <button type="button" onclick="fillFreshValues()">Fill Fresh Values</button>
+    </form>
+    <h4>{{ prediction_text }}</h4>
+</body>
+
+</html>
